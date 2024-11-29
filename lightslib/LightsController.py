@@ -1,8 +1,12 @@
 import asyncio
 from bleak import BleakClient
 import time
+import threading
 
 from config import *
+
+# Simulation of lights for unable to connect
+import lightsimul.main as simul
 
 class LightsController:
     def __init__(self):
@@ -19,7 +23,10 @@ class LightsController:
             self.connected = True
         except:
             print("Unable to connect to lights. Continuing program execution...")
-            self.connected = False
+            self.connected = False   
+            # When connection fails, run pygame simulation     
+            simul_thread = threading.Thread(target=simul.main, daemon=True)
+            simul_thread.start()
 
     # Disconnect from the lights
     async def disconnect(self):
@@ -35,13 +42,16 @@ class LightsController:
 
         start_time = time.time()
 
-        for i in range(width):
-            for j in range(height):
-                if difference[i][j] != '  ':
-                    numLed = i * 20 + j
-                    tasks.append(self.__drawPixelSingle(numLed, difference[i][j]))
+        if self.connected == True:
+            for i in range(width):
+                for j in range(height):
+                    if difference[i][j] != '  ':
+                        numLed = i * 20 + j
+                        tasks.append(self.__drawPixelSingle(numLed, difference[i][j]))
 
-        await asyncio.gather(*tasks)
+            await asyncio.gather(*tasks)
+        else:
+            simul.grid = currentFrame
 
         end_time = time.time()
         elapsed_time = end_time - start_time
