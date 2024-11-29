@@ -17,10 +17,25 @@ grid = [[f"{random.randint(0, 255):02X}" for _ in range(GRID_SIZE)] for _ in ran
 # Function to convert 2-digit hex to RGB color
 def hex_to_rgb(hex_value):
     try:
-        intensity = int(hex_value, 16)  # Convert 2-digit hex to integer
-    except:
-        intensity = 0
-    return (intensity, intensity, intensity)  # Use intensity for R, G, and B
+        value = int(hex_value, 16)  # Convert 2-digit hex to integer
+    except ValueError:
+        value = 0xFE  # Default to off if invalid input
+
+    if value == 0xFE:  # Special case for "off"
+        return (0, 0, 0)
+    elif value == 0xFF:  # Special case for white
+        return (255, 255, 255)
+    elif 0x00 <= value <= 0x2C:  # Red to Green transition
+        green = int((value / 0x2C) * 255)
+        return (255 - green, green, 0)
+    elif 0x2D <= value <= 0x59:  # Green to Blue transition
+        blue = int(((value - 0x2D) / (0x59 - 0x2D)) * 255)
+        return (0, 255 - blue, blue)
+    elif 0x5A <= value <= 0xFD:  # Blue to Red transition
+        red = int(((value - 0x5A) / (0xFD - 0x5A)) * 255)
+        return (red, 0, 255 - red)
+    else:
+        return (0, 0, 0)  # Fallback for unexpected cases
 
 # Function to draw the grid
 def draw_grid(surface, grid):
