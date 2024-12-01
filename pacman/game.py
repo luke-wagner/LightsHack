@@ -18,14 +18,12 @@ drawingFrame = False
 # Dictionary to track which keys are currently pressed
 keys_held = {}
 
-previousFrame = []
-currentFrame = []
+frame = []
 gameObjects = []
 
 for i in range(GAME_WIDTH):
     column = ['  '] * GAME_HEIGHT
-    currentFrame.append(column)
-    previousFrame.append(column.copy()) # must use copy to ensure same column is not used for both matrices
+    frame.append(column)
 
 lightsController = LightsController()
 
@@ -68,16 +66,15 @@ gameObjects.append(enemy2)
 gameNotOver = True
 
 def clearFrame():
-    global currentFrame
+    global frame
     
     for i in range(GAME_WIDTH):
         for j in range(GAME_HEIGHT):
-            currentFrame[i][j] = '  '
+            frame[i][j] = '  '
 
 async def newFrame():
     global drawingFrame
-    global currentFrame
-    global previousFrame
+    global frame
 
     drawingFrame = True
 
@@ -90,9 +87,7 @@ async def newFrame():
     for object in gameObjects:
         drawGameObject(object)
 
-    await lightsController.drawFramePartial(currentFrame, previousFrame)
-
-    previousFrame = copy.deepcopy(currentFrame)
+    await lightsController.drawFrame(frame)
 
     drawingFrame = False
 
@@ -111,7 +106,7 @@ def drawGameObject(gameObject):
             
             if coordX >= 0 and coordX < GAME_WIDTH and coordY >= 0 and coordY < GAME_HEIGHT:
                 #print("Coloring (" + str(coordX) + ", " + str(coordY) + "), led number: " + str(ledNumber) + ", with " + color)
-                currentFrame[coordX][coordY] = color
+                frame[coordX][coordY] = color
 
 # Check if a proposed position is valid for a gameObject based on its sprite size
 # Return true if position is valid, else return false

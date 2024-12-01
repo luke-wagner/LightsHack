@@ -2,6 +2,7 @@ import asyncio
 from bleak import BleakClient
 import time
 import threading
+import copy
 
 from config import *
 
@@ -14,6 +15,7 @@ class LightsController:
         self.client = BleakClient(self.address)
         self.connected = False
         asyncio.run(self.connect())
+        self.lastFrame = None
 
     # Establish connection to the lights
     async def connect(self):
@@ -33,8 +35,8 @@ class LightsController:
         await self.client.disconnect()
 
     # Draws new frame with reference to the old frame, draws each pixel individually
-    async def drawFramePartial(self, currentFrame, previousFrame):
-        difference = self.__computeDifference(currentFrame, previousFrame)
+    async def drawFrame(self, frame):
+        difference = self.__computeDifference(frame, self.lastFrame)
         tasks = []
 
         width = len(difference)
@@ -51,22 +53,46 @@ class LightsController:
 
             await asyncio.gather(*tasks)
         else:
-            simul.grid = currentFrame
+            simul.grid = frame
 
         end_time = time.time()
         elapsed_time = end_time - start_time
         print(f"Write time: {elapsed_time:.4f} seconds")
 
+        self.lastFrame = copy.deepcopy(frame)
 
+    '''
     # Draws completely new frame, each bulb is re-initialized. Uses L2CAP procedures
-    def drawFrameComplete(self, frame):
-        return
+    async def drawFrameComplete(self, frame):
+        tasks = []
+        width = len(frame)
+        height = len(frame[0])
+        start_time = time.time()
+
+        if self.connected == True:
+            for i in range(width):
+                for j in range(height):
+                    if frame[i][j] != '  ':
+                        numLed = i * 20 + j
+                        tasks.append(self.__drawPixelSingle(numLed, frame[i][j]))
+
+            await asyncio.gather(*tasks)
+        else:
+            simul.grid = frame
+
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"Write time: {elapsed_time:.4f} seconds")
+    '''
     
     async def drawBlankFrame(self):
         await self.__sendWriteCommand("aad00400646403bb")
         
     # Get the difference between the two matrices, return the new matrix
     def __computeDifference(self, currentFrame, previousFrame):
+        if previousFrame == None:
+            return copy.deepcopy(currentFrame)
+
         difference = []     # this will be a matrix
 
         width = len(currentFrame)
