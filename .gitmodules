@@ -1,0 +1,15 @@
+[submodule "designtool"]
+	path = designtool
+	url = https://github.com/luke-wagner/L_DesignTool.git
+[submodule "gameslib"]
+	path = gameslib
+	url = https://github.com/luke-wagner/L_GamesLib
+[submodule "lightsimul"]
+	path = lightsimul
+	url = https://github.com/luke-wagner/L_LightSimul.git
+[submodule "lightslib"]
+	path = lightslib
+	url = https://github.com/luke-wagner/L_LightsLib.git
+[submodule "pacman"]
+	path = pacman
+	url = https://github.com/luke-wagner/L_PacmanGame.git
