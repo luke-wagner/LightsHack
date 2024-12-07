@@ -7,8 +7,8 @@ from collections import deque
 
 from gameslib.GameObject import *
 from lightslib.LightsController import LightsController
-from .PlayerObj import PlayerObj
-from .sprites import *
+from pacman.PlayerObj import PlayerObj
+from pacman.sprites import *
 
 GAME_WIDTH = 20
 GAME_HEIGHT = 14
@@ -26,6 +26,7 @@ for i in range(GAME_WIDTH):
     frame.append(column)
 
 lightsController = LightsController()
+asyncio.run(lightsController.connect(run_simul_on_fail=True))
 
 backgroundObj = GameObject("background", backgroundSprite)
 gameObjects.append(backgroundObj)

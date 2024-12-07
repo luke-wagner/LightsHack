@@ -4,10 +4,11 @@ import tkinter as tk
 from tkinter import colorchooser
 import asyncio
 
-from lightsimul.main import *
+from lightsimul.simul import *
 from lightslib.LightsController import LightsController
 
 controller = LightsController()
+asyncio.run(controller.connect(run_simul_on_fail=False))
 
 # Grid origin starts below the toolbar
 GRID_SIZE = 20
@@ -100,11 +101,11 @@ async def main():
 
     # Create the initial 2D array (20x20) with random 2-digit hex values
     grid = [[f"{random.randint(0, 255):02X}" for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
-    
+
     # Create the game window
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Dynamic Grid Color Display")
-    
+
     # Main game loop
     running = True
     clock = pygame.time.Clock()

@@ -7,18 +7,19 @@ import copy
 from config import *
 
 # Simulation of lights for unable to connect
-import lightsimul.main as simul
+import lightsimul.simul as simul
 
 class LightsController:
     def __init__(self):
         self.address = BD_ADDR
         self.client = BleakClient(self.address)
         self.connected = False
-        asyncio.run(self.connect())
+        #asyncio.run(self.connect())
         self.lastFrame = None
 
     # Establish connection to the lights
-    async def connect(self):
+    # Must run with asyncio.run()
+    async def connect(self, run_simul_on_fail=False):
         try:
             await self.client.connect()
             print("Connection successful...")
@@ -27,7 +28,7 @@ class LightsController:
             print("Unable to connect to lights. Continuing program execution...")
             self.connected = False   
             # When connection fails, run pygame simulation     
-            simul_thread = threading.Thread(target=simul.main, daemon=True)
+            simul_thread = threading.Thread(target=simul.run_simul, daemon=True)
             simul_thread.start()
 
     # Disconnect from the lights
