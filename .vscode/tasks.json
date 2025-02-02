@@ -1,0 +1,24 @@
+{
+  // Task for running the active file, must run python with the -m tag
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Active Python File",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-m",
+        "${relativeFileDirname}.${fileBasenameNoExtension}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

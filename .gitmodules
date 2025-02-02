@@ -1,0 +1,12 @@
+[submodule "gameslib"]
+	path = gameslib
+	url = https://github.com/luke-wagner/L_GamesLib.git
+	branch = esp32
+[submodule "lightslib"]
+	path = lightslib
+	url = https://github.com/luke-wagner/L_LightsLib.git
+	branch = esp32
+[submodule "pacman"]
+	path = pacman
+	url = https://github.com/luke-wagner/L_PacmanGame.git
+	branch = esp32
