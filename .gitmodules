@@ -1,12 +1,12 @@
-[submodule "gameslib"]
-	path = gameslib
-	url = https://github.com/luke-wagner/L_GamesLib.git
-	branch = esp32
-[submodule "lightslib"]
-	path = lightslib
+[submodule "device_files/lightslib"]
+	path = device_files/lightslib
 	url = https://github.com/luke-wagner/L_LightsLib.git
 	branch = esp32
-[submodule "pacman"]
-	path = pacman
+[submodule "device_files/gameslib"]
+	path = device_files/gameslib
+	url = https://github.com/luke-wagner/L_GamesLib.git
+	branch = esp32
+[submodule "device_files/pacman"]
+	path = device_files/pacman
 	url = https://github.com/luke-wagner/L_PacmanGame.git
 	branch = esp32
