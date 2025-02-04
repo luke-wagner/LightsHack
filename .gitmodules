@@ -10,3 +10,6 @@
 	path = device_files/pacman
 	url = https://github.com/luke-wagner/L_PacmanGame.git
 	branch = esp32
+[submodule "device_files/espinput"]
+	path = device_files/espinput
+	url = https://github.com/luke-wagner/L_EspInput.git
