@@ -27,7 +27,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Footprint" "COM_09032:COM_09032"
+		(property "Footprint" "COM_09302:XDCR_COM-09032"
 			(at 0 0 0)
 			(effects
 				(font
@@ -97,8 +97,8 @@
 		)
 		(symbol "COM-09032_0_0"
 			(rectangle
-				(start -7.62 15.24)
-				(end 7.62 -25.4)
+				(start -7.62 -25.4)
+				(end 7.62 15.24)
 				(stroke
 					(width 0.254)
 					(type default)

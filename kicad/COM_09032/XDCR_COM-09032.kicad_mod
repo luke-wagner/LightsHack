@@ -1,5 +1,5 @@
 
-(footprint XDCR_COM-09032 (layer F.Cu) (tedit 67A6E4EE)
+(footprint XDCR_COM-09032 (layer F.Cu) (tedit 67ACE43E)
   (descr "")
   (fp_text reference REF** (at -2.625 -15.235 0) (layer F.SilkS)
     (effects (font (size 1.0 1.0) (thickness 0.15)))
