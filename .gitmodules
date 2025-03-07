@@ -13,3 +13,6 @@
 [submodule "device_files/espinput"]
 	path = device_files/espinput
 	url = https://github.com/luke-wagner/L_EspInput.git
+[submodule "game_controller"]
+	path = game_controller
+	url = https://github.com/luke-wagner/ESP32-GameController.git
