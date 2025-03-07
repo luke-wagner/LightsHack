@@ -1,3 +1,4 @@
+import machine
 import time
 import uasyncio as asyncio
 import gc
@@ -62,6 +63,10 @@ async def main():
         except SystemExit:
             # Don't exit the main program if game.py exits early
             pass
+
+        if btn0_event[1].is_set():
+            print("Power off received after game end")
+            machine.reset()
         
         gc.collect()
         print("\nMemory allocated: " + str(gc.mem_alloc()))
