@@ -38,9 +38,11 @@ async def main():
         
         while True:
             # Wait for power on signal
-            if btn0_event[1].is_set():
+            # Add btn1 event while btn0 is disconnected -- REMOVE LATER
+            if btn0_event[1].is_set() or btn1_event[1].is_set():
                 print("Power on signal received")
                 btn0_event[1].clear()
+                btn1_event[1].clear()
                 break
                 
             time.sleep(0.2)
@@ -48,8 +50,8 @@ async def main():
         print("Waiting for user to start game...")
         
         while True:
-            # Wait for select button press (down button)
-            if button_pressed(2):
+            # Wait for select button press (right button)
+            if button_pressed(4):
                 break
             
             time.sleep(0.1)
