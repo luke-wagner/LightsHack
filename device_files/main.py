@@ -9,6 +9,7 @@ from espinput.input import *
 gc.enable()
 
 # Send a blank frame to turn all lights off
+# -- Don't attach a LEDController for this function, not needed
 async def power_off():
     lightsController = LightsController()
     
