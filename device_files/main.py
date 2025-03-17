@@ -4,7 +4,7 @@ import uasyncio as asyncio
 import gc
 
 from lightslib.LightsController import LightsController
-from espinput.input import *
+from espinput.iodefs import *
 
 gc.enable()
 
@@ -39,11 +39,9 @@ async def main():
         
         while True:
             # Wait for power on signal
-            # Add btn1 event while btn0 is disconnected -- REMOVE LATER
-            if btn0_event[1].is_set() or btn1_event[1].is_set():
+            if power_button_event[1].is_set():
                 print("Power on signal received")
-                btn0_event[1].clear()
-                btn1_event[1].clear()
+                power_button_event[1].clear()
                 break
                 
             time.sleep(0.2)
@@ -52,7 +50,7 @@ async def main():
         
         while True:
             # Wait for select button press (right button)
-            if button_pressed(4):
+            if select_button_pressed():
                 break
             
             time.sleep(0.1)
@@ -67,7 +65,7 @@ async def main():
             # Don't exit the main program if game.py exits early
             pass
 
-        if btn0_event[1].is_set():
+        if power_button_event[1].is_set():
             print("Power off received after game end")
             machine.reset()
         
